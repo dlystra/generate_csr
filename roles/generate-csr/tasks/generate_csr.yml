@@ -1,0 +1,23 @@
+---
+- name: Create csr dir
+  file:
+    path: "{{ lookup('env', 'HOME') }}/certs"
+    state: directory
+    mode: 0775
+  register: ssl_dir
+
+- name: "Generate the private key file to sign the CSR"
+  openssl_privatekey:
+    path: "{{ ssl_dir.path }}/csr.key"
+
+- name: "Generate the CSR file signed with the private key"
+  openssl_csr:
+    path: "{{ ssl_dir.path }}/{{ item.common_name }}.csr"
+    privatekey_path: "{{ ssl_dir.path }}/csr.key"
+    common_name: "{{ item.common_name }}"
+    country_name: "{{ country_name }}"
+    state_or_province_name: "{{ state_or_province_name }}"
+    locality_name: "{{ locality_name }}"
+    organization_name: "{{ organization_name }}"
+    email_address: "{{ email_address }}"
+  loop: "{{ requests }}"

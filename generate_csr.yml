@@ -1,0 +1,7 @@
+#!/usr/local/bin/ansible-playbook
+---
+- name: Generate CSR
+  hosts: localhost
+  gather_facts: no
+  roles: 
+    - generate-csr
