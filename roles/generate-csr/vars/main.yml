@@ -1,7 +1,8 @@
 country_name:
 state_or_province_name:
+locality_name:
 organization_name:
 email_address:
 
 requests:
-- common_name: ""
+- common_name:
